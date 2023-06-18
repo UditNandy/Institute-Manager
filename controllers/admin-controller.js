@@ -1,5 +1,5 @@
 const Admin = require("../models/admin-model");
-const jwt = require("jsonwebtoken");
+const util = require("../utils/util");
 
 exports.signup = async (req, res) => {
   try {
@@ -15,35 +15,11 @@ exports.signup = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
-  try {
-    const { adminId, password } = req.body;
-    const admin = await Admin.findOne({ adminId: adminId }).select("+password");
-    const passwordMatched = await admin.correctPassword(
-      password,
-      admin.password
-    );
-    if (admin && passwordMatched) {
-      const accessToken = jwt.sign(
-        {
-          adminId: adminId,
-          emailId: admin.emailId,
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: process.env.JWT_EXPIRY,
-        }
-      );
-      res.json({
-        status: "Success",
-        accessToken,
-      });
-    } else {
-      res
-        .status(401)
-        .json({ status: "Failed", message: "Invalid credentials" });
-    }
-  } catch (err) {
-    res.status(500).json({ message: "Something went wrong" });
-  }
+exports.fetchAccountDetails = async (req, res) => {
+  const decodedToken = await util.getDecodedToken(req.headers.authorization);
+  const adminDetails = await Admin.findOne({ id: decodedToken.id });
+  res.status(200).json({
+    status: "Success",
+    data: adminDetails,
+  });
 };

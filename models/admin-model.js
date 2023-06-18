@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 const adminSchema = new mongoose.Schema({
-  adminId: {
+  id: {
     type: String,
     required: [true, "Id must not be null"],
     unique: true,
