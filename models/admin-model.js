@@ -7,8 +7,12 @@ const adminSchema = new mongoose.Schema({
     required: [true, "Id must not be null"],
     unique: true,
   },
-  emailId: { type: String, required: true },
+  emailId: { type: String, required: true, unique: true },
   name: { type: String, required: true },
+  authorizationProfile: {
+    type: String,
+    required: [true, "authorizationProfile must not be null"],
+  },
   password: {
     type: String,
     required: true,

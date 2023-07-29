@@ -6,15 +6,18 @@ exports.login = async (req, res) => {
   try {
     const { id, password } = req.body;
     const admin = await Admin.findOne({ id: id }).select("+password");
-    const passwordMatched = await admin.correctPassword(
-      password,
-      admin.password
-    );
+    if (admin) {
+      var passwordMatched = await admin.correctPassword(
+        password,
+        admin.password
+      );
+    }
     if (admin && passwordMatched) {
       const accessToken = jwt.sign(
         {
           id: id,
           emailId: admin.emailId,
+          authorizationProfile: admin.authorizationProfile,
         },
         process.env.JWT_SECRET,
         {
@@ -27,7 +30,7 @@ exports.login = async (req, res) => {
       });
     } else {
       res
-        .status(401)
+        .status(400)
         .json({ status: "Failed", message: "Invalid credentials" });
     }
   } catch (err) {

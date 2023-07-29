@@ -1,8 +1,15 @@
 const Admin = require("../models/admin-model");
+const AuthorizationProfile = require("../models/authorization-model");
 const util = require("../utils/util");
 
 exports.signup = async (req, res) => {
   try {
+    const authorizationProifle = await AuthorizationProfile.findOne({
+      profileName: req.body.authorizationProfile,
+    });
+    if (!authorizationProifle) {
+      res.status(400).json({ message: "Authorization Profile Doesnot exist" });
+    }
     const newAdmin = await Admin.create(req.body);
     res.status(201).json({
       status: "Success",
