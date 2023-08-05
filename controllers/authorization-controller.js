@@ -1,5 +1,4 @@
 const AuthorizationProfile = require("../models/authorization-model");
-const util = require("../utils/util");
 
 exports.createAuthorizationProfile = async (req, res) => {
   try {
@@ -10,14 +9,11 @@ exports.createAuthorizationProfile = async (req, res) => {
   }
 };
 
-exports.fetchUserAuthorizationProfile = async (req, res) => {
+exports.fetchAuthorizationProfiles = async (req, res) => {
   try {
-    const decode = await util.getDecodedToken(req.headers.authorization);
-    const authorizationProfile = await AuthorizationProfile.findOne({
-      profileName: decode.authorizationProfile,
-    });
-    res.status(200).json({ status: "Success", data: authorizationProfile });
+    const authorizationProfiles = await AuthorizationProfile.find();
+    res.status(200).json({ status: "Success", data: authorizationProfiles });
   } catch (err) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(400).json({ status: "Failed", message: err });
   }
 };

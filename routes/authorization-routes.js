@@ -6,10 +6,6 @@ const authorizationRouter = express.Router();
 
 authorizationRouter
   .route("/")
-  .get(
-    authController.verifyToken,
-    authorizationController.fetchUserAuthorizationProfile
-  )
   .post(
     authController.verifyToken,
     authorizationController.createAuthorizationProfile

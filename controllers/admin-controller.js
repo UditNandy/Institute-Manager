@@ -1,6 +1,5 @@
 const Admin = require("../models/admin-model");
 const AuthorizationProfile = require("../models/authorization-model");
-const util = require("../utils/util");
 
 exports.signup = async (req, res) => {
   try {
@@ -20,13 +19,4 @@ exports.signup = async (req, res) => {
       message: "Server didnot respond",
     });
   }
-};
-
-exports.fetchAccountDetails = async (req, res) => {
-  const decodedToken = await util.getDecodedToken(req.headers.authorization);
-  const adminDetails = await Admin.findOne({ id: decodedToken.id });
-  res.status(200).json({
-    status: "Success",
-    data: adminDetails,
-  });
 };
