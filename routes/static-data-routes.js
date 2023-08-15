@@ -5,7 +5,7 @@ const authController = require("../controllers/auth-controller");
 const staticDataRouter = express.Router();
 
 staticDataRouter
-  .route("/")
+  .route("/authorizations")
   .get(authController.verifyToken, staticDataController.fetchAllAuths)
   .post(authController.verifyToken, staticDataController.createAllAuths);
 
