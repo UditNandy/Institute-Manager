@@ -7,6 +7,14 @@ const credentialSchema = new mongoose.Schema({
     type: String,
     required: [true, "Roll number is required"],
   },
+  class: {
+    type: String,
+    required: [true, "Class is required"],
+  },
+  section: {
+    type: String,
+    required: [true, "Section is mandatory"],
+  },
   password: {
     type: String,
     required: true,
@@ -81,6 +89,10 @@ const studentSchema = new mongoose.Schema({
         type: String,
         required: [true, "Father's occupation is required"],
       },
+      aadhaarNumber: {
+        type: String,
+        required: [true, "Father's Aadhaar number is required"],
+      },
     },
     motherInformation: {
       name: {
@@ -94,6 +106,10 @@ const studentSchema = new mongoose.Schema({
       occupation: {
         type: String,
         required: [true, "Mother's occupation is required"],
+      },
+      aadhaarNumber: {
+        type: String,
+        required: [true, "Mother's Aadhaar number is required"],
       },
     },
     guardianInformation: {
@@ -112,6 +128,10 @@ const studentSchema = new mongoose.Schema({
       relation: {
         type: String,
         required: [true, "Guardian's occupation is required"],
+      },
+      aadhaarNumber: {
+        type: String,
+        required: [true, "Guardian's Aadhaar number is required"],
       },
     },
   },
